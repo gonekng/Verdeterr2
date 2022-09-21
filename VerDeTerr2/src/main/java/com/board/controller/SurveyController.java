@@ -48,8 +48,6 @@ public class SurveyController {
 
 	}
 	
-	private static PythonInterpreter intPre;
-
 	@Async("executor")
 	@PostMapping(value = "/survey/surveydone")
 	public String registerSurvey(final SurveyDTO params, Model model, HttpSession session) {
@@ -66,8 +64,6 @@ public class SurveyController {
 			String convertID = params.getId();
 
 			System.setProperty("python.import.site", "false");
-			PythonInterpreter intPre = new PythonInterpreter();
-
 			System.out.println(convertID.getClass().getName());
 
 			String t = "src/main/python/python_batch.bat".concat(" " + convertID);
@@ -81,8 +77,6 @@ public class SurveyController {
 			while ((line = br.readLine()) != null) {
 				System.out.println(line);
 			}
-
-			intPre.close();
 			
 		} catch (DataAccessException e) {
 			e.printStackTrace();
